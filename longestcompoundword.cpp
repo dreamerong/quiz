@@ -9,11 +9,6 @@ using namespace std;
 
 unordered_set<string> hashtable;
 
-bool compare_string_len(string a, string b)
-{
-  return (a.size() >= b.size());
-}
-
 // return true if word is a subword or compound word
 bool isword(const string& word, bool compound_only)
 {
@@ -36,32 +31,34 @@ bool isword(const string& word, bool compound_only)
 
 int main(int argc, char *argv[])
 {
-  vector<string> words_sorted;
   ifstream inputfile;
   string word;
   int rc = 1; // 0: sucess, 1: fail
+  int longestlen = 0;
   
   inputfile.open(argv[1]);
   while (!inputfile.eof())
   {
     getline(inputfile, word);
-    words_sorted.push_back(word);
     hashtable.insert(word);
   }
   inputfile.close();
-  
-  sort(words_sorted.begin(), words_sorted.end(), compare_string_len);
-  
-  for (auto it = words_sorted.begin(); it < words_sorted.end(); it++) {
+    
+  for (auto it = hashtable.begin(); it != hashtable.end(); it++) {
+    if ((*it).size() <= longestlen) {
+      continue;
+    }
     if (isword(*it, true)) {
-      cout << "The longest compund word is " << (*it) << endl;
+      longestlen = (*it).size();
+      word = *it;
       rc = 0;
-      break;
     }
   }
   
   if (rc) {
     cout << "Can't find the longest compound word"<< endl;
+  } else {
+    cout << "The longest compund word is " << word << endl;
   }
 
   return rc;
