@@ -41,13 +41,14 @@ int main(int argc, char *argv[])
   string word;
   int rc = 1; // 0: sucess, 1: fail
   
-  inputfile.open("word.list");
+  inputfile.open(argv[1]);
   while (!inputfile.eof())
   {
     getline(inputfile, word);
     words_sorted.push_back(word);
     hashtable.insert(word);
   }
+  inputfile.close();
   
   sort(words_sorted.begin(), words_sorted.end(), compare_string_len);
   
@@ -63,6 +64,5 @@ int main(int argc, char *argv[])
     cout << "Can't find the longest compound word"<< endl;
   }
 
-  inputfile.close();
   return rc;
 }
