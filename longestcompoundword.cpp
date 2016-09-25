@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <algorithm>
 #include <unordered_set>
 #include <vector>
 
@@ -13,12 +14,10 @@ bool compare_string_len(string a, string b)
   return (a.size() >= b.size());
 }
 
-bool isword(string& word, bool compound_only);
-
 // return true if word is a subword or compound word
-bool isword(string& word, bool compound_only)
+bool isword(const string& word, bool compound_only)
 {
-  string prefix;
+  string prefix, suffix;
   
   for(int i = 1; i < word.size(); i++) {
     prefix = word.substr(0, i);
@@ -35,17 +34,17 @@ bool isword(string& word, bool compound_only)
   return false;
 }
 
-int main()
+int main(int argc, char *argv[])
 {
   vector<string> words_sorted;
   ifstream inputfile;
   string word;
   int rc = 1; // 0: sucess, 1: fail
   
-  inputfile.open("words.list");
-  while (!infile.eof())
+  inputfile.open("word.list");
+  while (!inputfile.eof())
   {
-    getline(infile, word);
+    getline(inputfile, word);
     words_sorted.push_back(word);
     hashtable.insert(word);
   }
